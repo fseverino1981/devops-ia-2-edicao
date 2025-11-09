@@ -7,7 +7,18 @@ jobs:
   CI:
     runs-on: ubuntu-lastest
     steps:
-      - run: echo "Obter o código"
+      - name: Checkout
+        uses: actions/checkout@v6-beta
+      - uses: actions/setup-python@v6.0.0
+        with:
+          python-version: '3.11'
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install - requiriments.txt
+      - name: Testes
+        run: python -m pytest tests/ -v
+          
       - run: echo "Executar Docker build"
       - run: echo "Enviar a Imagem Docker para o Docker Hub"
   CD:
